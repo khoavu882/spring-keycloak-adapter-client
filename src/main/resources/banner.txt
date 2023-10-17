@@ -1,0 +1,13 @@
+                                                                                            ${AnsiColor.YELLOW}░░░░░░░█▐▓▓▓▓░████▄▄▄█▀▄▓▓▓▓▓▌█${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}░░░░░▄█▌▀▄▓▓▓▓▄▄▄▄▀▀▀▄▓▓▓▓▓▓▓▌█${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}░░░▄█▀▀▄▓█▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▀░▓▌█${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}░░█▀▄▓▓▓███▓▓▓▓▓▓▓███▓▓▓▓▄░░▄▓▐█▌${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}░█▌▓▓▓▀▀▓▓▓▓▓▓▓▓███▓▓▓▓▓▓▓▄▀▓▓▐█${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}▐█▐██▐░▄▓▓▓▓▓▓▓▓▓▀▄░▀▓▓▓▓▓▓▓▓▓▌█▌${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}█▌███▓▓▓▓▓▓▓▓▓▓▓▓▐░░▄▓▓███▓▓▓▄▀▐█${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}█▐█▓▓▓▀░░▀▓▓▓▓▓▓▓▓▓▓▓██████▓▓▓▓▐█${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}▌▓▓▓▄▌▀░▀░▐▀█▄▓▓██████████▓▓▓▓▓▌█▌${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}▌▓▓▓▓▓▄▄▀▀▓▓▓▀▓▓▓▓▓▓▓▓▓▓█▓█▓█▓▓▓▌█▌${AnsiColor.YELLOW}
+                                                                                            ${AnsiColor.YELLOW}█▐▓▓▓▓▓▓▓▓▄▄▄▓▓▓▓▓▓█▓█▓█▓█▓▓▓▓▓▓▓▐█${AnsiColor.YELLOW}
+${AnsiColor.GREEN}Application Version:${AnsiColor.RED} :: Spring Boot${spring-boot.formatted-version} :: ${AnsiColor.RED}
+${AnsiColor.DEFAULT}
