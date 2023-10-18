@@ -10,6 +10,7 @@ public enum ErrorsEnum {
     USER_NAME_HAD_BEEN_EXISTED(EntitiesConstant.USER, ErrorsKeyConstant.HAD_BEEN_EXISTED, ""),
     USER_INVALID(EntitiesConstant.USER, ErrorsKeyConstant.ID_INVALID, ""),
     USER_ID_NULL(EntitiesConstant.USER, ErrorsKeyConstant.ID_NULL, ""),
+    USER_NOT_CREATED(EntitiesConstant.USER, ErrorsKeyConstant.NOT_CREATED, ""),
     WEBHOOK_ID_NOT_FOUND(EntitiesConstant.USER, ErrorsKeyConstant.ID_NOT_FOUND, ""),
     WEBHOOK_NAME_HAD_BEEN_EXISTED(EntitiesConstant.USER, ErrorsKeyConstant.HAD_BEEN_EXISTED, ""),
     WEBHOOK_INVALID(EntitiesConstant.USER, ErrorsKeyConstant.ID_INVALID, ""),

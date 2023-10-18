@@ -127,8 +127,8 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleUsernameAlreadyUsedException(
-        UsernameAlreadyUsedException ex,
+    public ResponseEntity<Problem> handleLoginAlreadyUsedException(
+            LoginAlreadyUsedException ex,
         NativeWebRequest request
     ) {
         LoginAlreadyUsedException problem = new LoginAlreadyUsedException();
@@ -148,7 +148,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
+    public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestIamException ex, NativeWebRequest request) {
         return create(
             ex,
             request,

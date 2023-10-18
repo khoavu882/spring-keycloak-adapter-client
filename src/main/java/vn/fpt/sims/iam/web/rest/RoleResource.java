@@ -3,17 +3,13 @@ package vn.fpt.sims.iam.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.UUID;
-import javax.validation.Valid;
 
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import vn.fpt.sims.iam.constant.EntitiesConstant;
 import vn.fpt.sims.iam.service.RoleService;
 import vn.fpt.sims.iam.web.util.HeaderUtil;
@@ -39,13 +35,13 @@ public class RoleResource {
     }
 
     /**
-     * {@code POST  } : Create a new attribute.
+     * {@code POST  } : Create a new Role.
      *
-     * @param name of the role to create.
+     * @param name of the Role to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new attributeDTO, or with status {@code 400 (Bad Request)} if the attribute has already an ID.
      */
     @PostMapping
-    public ResponseEntity<String> createAttribute(@RequestParam String name) throws URISyntaxException {
+    public ResponseEntity<String> create(@RequestParam String name) throws URISyntaxException {
         log.debug("REST request to create role : {}", name);
         roleService.create(name);
         return ResponseEntity
@@ -60,20 +56,20 @@ public class RoleResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of attributes in body.
      */
     @GetMapping
-    public ResponseEntity<List<RoleRepresentation>> getAllRole() {
-        log.debug("REST request to get a page of Attributes");
+    public ResponseEntity<List<RoleRepresentation>> getAll() {
+        log.debug("REST request to get list of Role");
         List<RoleRepresentation> roles = roleService.findAll();
         return ResponseEntity.ok().body(roles);
     }
 
     /**
-     * {@code GET  /:name} : get the "id" attribute.
+     * {@code GET  /:name} : get the "name" Role.
      *
      * @param name the name of the Role to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the attributeDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{name}")
-    public ResponseEntity<RoleRepresentation> getRoleByName(@PathVariable String name) {
+    public ResponseEntity<RoleRepresentation> getByName(@PathVariable String name) {
         log.debug("REST request to get Role by name : {}", name);
         RoleRepresentation roleRepresentation = roleService.findByName(name);
         return ResponseEntity.ok().body(roleRepresentation);

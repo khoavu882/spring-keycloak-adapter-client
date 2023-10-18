@@ -2,7 +2,7 @@ package vn.fpt.sims.iam.web.errors;
 
 import vn.fpt.sims.iam.constant.ErrorConstants;
 
-public class EmailAlreadyUsedException extends BadRequestAlertException {
+public class EmailAlreadyUsedException extends BadRequestIamException {
 
     private static final long serialVersionUID = 1L;
 
