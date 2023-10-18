@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 /**
- * REST controller for managing {@link vn.fpt.sims.iam Role}.
+ * REST controller for managing {@link vn.fpt.sims.iam Group}.
  */
 @RestController
 @RequestMapping("/api/" + EntitiesConstant.GROUP)
@@ -42,7 +42,7 @@ public class GroupResource {
      */
     @PostMapping
     public ResponseEntity<Void> create(@RequestParam String name) throws URISyntaxException {
-        log.debug("REST request to create role : {}", name);
+        log.debug("REST request to create Group : {}", name);
         groupService.create(name);
         return ResponseEntity
                 .created(new URI("/" + ENTITY_NAME))
@@ -51,13 +51,13 @@ public class GroupResource {
     }
 
     /**
-     * {@code GET  } : get all the role.
+     * {@code GET  } : get all the Group.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of attributes in body.
      */
     @GetMapping
     public ResponseEntity<List<GroupRepresentation>> getAll() {
-        log.debug("REST request to get list of Role");
+        log.debug("REST request to get list of Group");
         List<GroupRepresentation> groups = groupService.findAll();
         return ResponseEntity.ok().body(groups);
     }

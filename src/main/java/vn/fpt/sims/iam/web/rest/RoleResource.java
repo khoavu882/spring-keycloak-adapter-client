@@ -51,7 +51,7 @@ public class RoleResource {
     }
 
     /**
-     * {@code GET  } : get all the role.
+     * {@code GET  } : get all the Role.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of attributes in body.
      */

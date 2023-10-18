@@ -11,7 +11,7 @@ spring:
         - dev
         - api-docs
         # Uncomment to activate TLS for the dev profile
-        - tls
+        #- tls
 
 springdoc:
   api-docs:
