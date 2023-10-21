@@ -1,5 +1,6 @@
 package vn.fpt.sims.iam.service.impl;
 
+import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.slf4j.Logger;
@@ -18,28 +19,27 @@ public class RoleServiceImpl implements RoleService {
 
     private final Keycloak keycloak;
 
-    @Autowired
-    private final ApplicationProperties applicationProperties;
+    private final KeycloakSpringBootProperties keycloakProp;
 
-    public RoleServiceImpl(Keycloak keycloak, ApplicationProperties applicationProperties) {
+    public RoleServiceImpl(Keycloak keycloak, KeycloakSpringBootProperties keycloakProp) {
         this.keycloak = keycloak;
-        this.applicationProperties = applicationProperties;
+        this.keycloakProp = keycloakProp;
     }
 
     @Override
     public void create(String name) {
         RoleRepresentation role = new RoleRepresentation();
         role.setName(name);
-        keycloak.realm(applicationProperties.getKeycloak().getRealm()).roles().create(role);
+        keycloak.realm(keycloakProp.getRealm()).roles().create(role);
     }
 
     @Override
     public List<RoleRepresentation> findAll() {
-        return keycloak.realm(applicationProperties.getKeycloak().getRealm()).roles().list();
+        return keycloak.realm(keycloakProp.getRealm()).roles().list();
     }
 
     @Override
     public RoleRepresentation findByName(String roleName) {
-        return keycloak.realm(applicationProperties.getKeycloak().getRealm()).roles().get(roleName).toRepresentation();
+        return keycloak.realm(keycloakProp.getRealm()).roles().get(roleName).toRepresentation();
     }
 }

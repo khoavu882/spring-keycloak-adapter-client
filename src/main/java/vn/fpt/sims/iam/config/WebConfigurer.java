@@ -1,5 +1,8 @@
 package vn.fpt.sims.iam.config;
 
+import org.keycloak.OAuth2Constants;
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
+import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.slf4j.Logger;
@@ -19,10 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import java.io.File;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -41,13 +41,16 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final ApplicationProperties applicationProperties;
 
-    public WebConfigurer(Environment env, ApplicationProperties applicationProperties) {
+    private final KeycloakSpringBootProperties keycloakProp;
+
+    public WebConfigurer(Environment env, ApplicationProperties applicationProperties, KeycloakSpringBootProperties keycloakProp) {
         this.env = env;
         this.applicationProperties = applicationProperties;
+        this.keycloakProp = keycloakProp;
     }
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
+    public void onStartup(ServletContext servletContext) {
         if (env.getActiveProfiles().length != 0) {
             log.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
         }
@@ -108,22 +111,29 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     public RestTemplate restTemplate() {
         // Do any additional configuration here
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.hcm.fpt.vn", 80));
-        requestFactory.setProxy(proxy);
+//        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.hcm.fpt.vn", 80));
+//        requestFactory.setProxy(proxy);
         requestFactory.setReadTimeout(3000);
         requestFactory.setConnectTimeout(3000);
         return new RestTemplate(requestFactory);
     }
 
+    /**
+     * Use properties in application.yml instead of keycloak.json
+     */
+    @Bean
+    public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
+        return new KeycloakSpringBootConfigResolver();
+    }
+
     @Bean
     public Keycloak keycloak() {
-        ApplicationProperties.KeycloakClient keycloakConfig = applicationProperties.getKeycloak();
         return KeycloakBuilder.builder()
-                .grantType("client_credentials")
-                .serverUrl(keycloakConfig.getAuthUrl())
-                .realm(keycloakConfig.getRealm())
-                .clientId(keycloakConfig.getClientId())
-                .clientSecret(keycloakConfig.getClientSecret())
+                .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
+                .serverUrl(keycloakProp.getAuthServerUrl())
+                .realm(keycloakProp.getRealm())
+                .clientId(keycloakProp.getResource())
+                .clientSecret(keycloakProp.getCredentials().get("secret").toString())
                 .build();
     }
 }

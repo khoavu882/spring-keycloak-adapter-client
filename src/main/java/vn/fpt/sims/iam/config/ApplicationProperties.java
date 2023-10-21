@@ -19,7 +19,6 @@ public class ApplicationProperties {
     private final ClientApp clientApp = new ClientApp();
     private final Http http = new Http();
     private final Logging logging = new Logging();
-    private final KeycloakClient keycloak = new KeycloakClient();
 
     @Getter
     @Setter
@@ -119,20 +118,6 @@ public class ApplicationProperties {
             public Cache() {
                 // TODO document why this constructor is empty
             }
-        }
-    }
-
-    @Getter
-    @Setter
-    public static class KeycloakClient {
-        private String clientId;
-        private String clientSecret;
-        private String authUrl;
-        private String realm;
-
-
-        public KeycloakClient() {
-            // TODO document why this constructor is empty
         }
     }
 

@@ -1,5 +1,6 @@
 package vn.fpt.sims.iam.service.impl;
 
+import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
@@ -23,15 +24,11 @@ public class UserServiceImpl implements UserService {
 
     private final Keycloak keycloak;
 
-    @Autowired
-    private final ApplicationProperties applicationProperties;
+    private final KeycloakSpringBootProperties keycloakProp;
 
-    private final ApplicationProperties.KeycloakClient keycloakProp;
-
-    public UserServiceImpl(Keycloak keycloak, ApplicationProperties applicationProperties) {
+    public UserServiceImpl(Keycloak keycloak, KeycloakSpringBootProperties keycloakProp) {
         this.keycloak = keycloak;
-        this.applicationProperties = applicationProperties;
-        this.keycloakProp = applicationProperties.getKeycloak();
+        this.keycloakProp = keycloakProp;
     }
 
     @Override
