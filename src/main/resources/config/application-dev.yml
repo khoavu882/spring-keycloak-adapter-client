@@ -35,7 +35,9 @@ keycloak:
   realm: ${KEYCLOAK_REALM}
   auth-server-url: ${KEYCLOAK_AUTH_URL}
   ssl-required: external
-  resource: ${KEYCLOAK_CLIENT_ID}
+  resource: ${KEYCLOAK_ADMIN_CLIENT_ID}
   credentials:
-    secret: ${KEYCLOAK_CLIENT_SECRET}
+    secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET}
+    login-app-id: ${KEYCLOAK_CLIENT_ID}
+    login-app-secret: ${KEYCLOAK_CLIENT_SECRET}
   use-resource-role-mappings: true
