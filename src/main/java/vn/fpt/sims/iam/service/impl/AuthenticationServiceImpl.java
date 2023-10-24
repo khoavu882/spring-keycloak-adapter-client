@@ -30,6 +30,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void logout(String accessToken) {
         keycloakUtil.getAdminInstance()
                 .tokenManager()
-                .getAccessToken();
+                .invalidate(accessToken);
     }
 }
