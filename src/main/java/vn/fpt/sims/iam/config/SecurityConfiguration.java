@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+import vn.fpt.sims.iam.model.enumeration.AuthorizeEnum;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -64,8 +65,10 @@ public class SecurityConfiguration {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/customers*").hasRole("USER")
-                .antMatchers("/admin*").hasRole("ADMIN")
+                .antMatchers("/api/auth*").permitAll()
+                .antMatchers("/api/groups*").hasRole(AuthorizeEnum.APP_ADMIN.getValue())
+                .antMatchers("/api/roles*").hasRole(AuthorizeEnum.APP_ADMIN.getValue())
+                .antMatchers("/api/users*").hasRole(AuthorizeEnum.APP_ADMIN.getValue())
                 .anyRequest().permitAll()
                 .and()
                 .httpBasic()
