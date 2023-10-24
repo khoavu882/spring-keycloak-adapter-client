@@ -19,6 +19,8 @@ import vn.fpt.sims.iam.web.util.KeycloakUtil;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -103,12 +105,18 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     @Bean
     public RestTemplate restTemplate() {
+
+        ApplicationProperties.Http httpConfig = applicationProperties.getHttp();
+
         // Do any additional configuration here
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-//        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.hcm.fpt.vn", 80));
-//        requestFactory.setProxy(proxy);
-        requestFactory.setReadTimeout(3000);
-        requestFactory.setConnectTimeout(3000);
+        Proxy proxy = new Proxy(
+                Proxy.Type.HTTP,
+                new InetSocketAddress(httpConfig.getProxy().getHost(),
+                        httpConfig.getProxy().getPort()));
+        requestFactory.setProxy(proxy);
+        requestFactory.setReadTimeout(httpConfig.getReadTimeOut());
+        requestFactory.setConnectTimeout(httpConfig.getConnectTimeout());
         return new RestTemplate(requestFactory);
     }
 

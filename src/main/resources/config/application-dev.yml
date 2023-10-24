@@ -30,6 +30,10 @@ application:
     exposed-headers: 'Authorization,Link,X-Total-Count,X-${application.clientApp.name}-alert,X-${application.clientApp.name}-error,X-${application.clientApp.name}-params'
     allow-credentials: true
     max-age: 1800
+  http:
+    proxy:
+      host: ${PROXY_HOST}
+      port: ${PROXY_PORT}
 
 keycloak:
   realm: ${KEYCLOAK_REALM}
