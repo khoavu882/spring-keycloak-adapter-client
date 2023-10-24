@@ -1,6 +1,6 @@
 logging:
   level:
-    ROOT: INFO
+    ROOT: DEBUG
     vn.fpt.sims.iam: DEBUG
 
 spring:
