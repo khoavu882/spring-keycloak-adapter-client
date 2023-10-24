@@ -38,11 +38,11 @@ public class RoleResource {
      * {@code POST  } : Create a new Role.
      *
      * @param name of the Role to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new attributeDTO, or with status {@code 400 (Bad Request)} if the attribute has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the Role, or with status {@code 400 (Bad Request)} if the Role has already an ID.
      */
     @PostMapping
     public ResponseEntity<String> create(@RequestParam String name) throws URISyntaxException {
-        log.debug("REST request to create role : {}", name);
+        log.debug("REST request to create Role : {}", name);
         roleService.create(name);
         return ResponseEntity
                 .created(new URI("/" + ENTITY_NAME))
@@ -57,7 +57,7 @@ public class RoleResource {
      */
     @GetMapping
     public ResponseEntity<List<RoleRepresentation>> getAll() {
-        log.debug("REST request to get list of Role");
+        log.debug("REST request to get list of Roles");
         List<RoleRepresentation> roles = roleService.findAll();
         return ResponseEntity.ok().body(roles);
     }

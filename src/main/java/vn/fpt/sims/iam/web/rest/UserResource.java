@@ -48,11 +48,11 @@ public class UserResource {
      * {@code POST  } : Create a new User.
      *
      * @param userRequest of the User to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new attributeDTO, or with status {@code 400 (Bad Request)} if the attribute has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new User, or with status {@code 400 (Bad Request)} if the User has already an ID.
      */
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody UserRequest userRequest) throws URISyntaxException {
-        log.debug("REST request to create user : {}", userRequest);
+        log.debug("REST request to create User: {}", userRequest);
         try (Response response = userService.create(userRequest)) {
             if (response.getStatus() != 201)
                 throw new BadRequestIamException(ErrorsEnum.USER_NOT_CREATED);
@@ -66,11 +66,11 @@ public class UserResource {
     /**
      * {@code GET  } : get all the User.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of attributes in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of users in body.
      */
     @GetMapping
     public ResponseEntity<List<UserRepresentation>> getAll() {
-        log.debug("REST request to get list of Role");
+        log.debug("REST request to get list of Users");
         List<UserRepresentation> users = userService.findAll();
         return ResponseEntity.ok().body(users);
     }
@@ -83,7 +83,7 @@ public class UserResource {
      */
     @GetMapping("/{username}")
     public ResponseEntity<List<UserRepresentation>> getById(@PathVariable String username) {
-        log.debug("REST request to get User by ID : {}", username);
+        log.debug("REST request to get User by ID: {}", username);
         List<UserRepresentation> roleRepresentation = userService.findByUsername(username);
         return ResponseEntity.ok().body(roleRepresentation);
     }
@@ -96,7 +96,7 @@ public class UserResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserRepresentation> getById(@PathVariable UUID id) {
-        log.debug("REST request to get User by ID : {}", id);
+        log.debug("REST request to get User by ID: {}", id);
         UserRepresentation roleRepresentation = userService.findById(id);
         return ResponseEntity.ok().body(roleRepresentation);
     }
@@ -104,14 +104,14 @@ public class UserResource {
     /**
      * {@code GET  /:id/group/:groupId} : search with "username" of the User.
      *
-     * @param id of the User to retrieve.
+     * @param id      of the User to retrieve.
      * @param groupId of the Group to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the attributeDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 202 (accepted)}, or with status {@code 404 (Not Found)}.
      */
     @PostMapping("/{id}/groups/{groupId}")
     public ResponseEntity<List<UserRepresentation>> assignToGroup(@PathVariable UUID id,
-                                                            @PathVariable UUID groupId) {
-        log.debug("REST request to assign to group for User by ID : {}", id);
+                                                                  @PathVariable UUID groupId) {
+        log.debug("REST request to assign to group for User by ID: {}", id);
         userService.assignToGroup(id, groupId);
         return ResponseEntity.accepted().build();
     }
@@ -119,14 +119,14 @@ public class UserResource {
     /**
      * {@code GET  /:id/roles/:roleName} : search with "username" of the User.
      *
-     * @param id of the User to retrieve.
+     * @param id       of the User to retrieve.
      * @param roleName of the Role to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the attributeDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 202 (accepted)} or with status {@code 404 (Not Found)}.
      */
     @PostMapping("/{id}/roles/{roleName}")
     public ResponseEntity<Void> assignRole(@PathVariable UUID id,
-                                                            @PathVariable String roleName) {
-        log.debug("REST request to assign Role for User by ID : {}", id);
+                                           @PathVariable String roleName) {
+        log.debug("REST request to assign Role for User by ID: {}", id);
         RoleRepresentation role = roleService.findByName(roleName);
         userService.assignRole(id, role);
         return ResponseEntity.accepted().build();
