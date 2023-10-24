@@ -1,10 +1,5 @@
 package vn.fpt.sims.iam.config;
 
-import org.keycloak.OAuth2Constants;
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
-import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
-import org.keycloak.admin.client.Keycloak;
-import org.keycloak.admin.client.KeycloakBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.WebServerFactory;
@@ -20,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import vn.fpt.sims.iam.web.util.KeycloakUtil;
 
 import javax.servlet.ServletContext;
 import java.io.File;
@@ -41,12 +37,10 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final ApplicationProperties applicationProperties;
 
-    private final KeycloakSpringBootProperties keycloakProp;
 
-    public WebConfigurer(Environment env, ApplicationProperties applicationProperties, KeycloakSpringBootProperties keycloakProp) {
+    public WebConfigurer(Environment env, ApplicationProperties applicationProperties) {
         this.env = env;
         this.applicationProperties = applicationProperties;
-        this.keycloakProp = keycloakProp;
     }
 
     @Override
@@ -118,22 +112,8 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         return new RestTemplate(requestFactory);
     }
 
-    /**
-     * Use properties in application.yml instead of keycloak.json
-     */
     @Bean
-    public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
-        return new KeycloakSpringBootConfigResolver();
-    }
-
-    @Bean
-    public Keycloak keycloak() {
-        return KeycloakBuilder.builder()
-                .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
-                .serverUrl(keycloakProp.getAuthServerUrl())
-                .realm(keycloakProp.getRealm())
-                .clientId(keycloakProp.getResource())
-                .clientSecret(keycloakProp.getCredentials().get("secret").toString())
-                .build();
+    public KeycloakUtil keycloakUtil() {
+        return new KeycloakUtil();
     }
 }
