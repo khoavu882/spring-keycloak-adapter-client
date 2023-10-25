@@ -21,7 +21,7 @@ application:
   cache: # Cache configuration
     redis: # Redis configuration
       expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
-      server: redis://${env.REDIS_HOST}:${env.REDIS_PORT}
+      server: redis://${REDIS_HOST}:${REDIS_PORT}
       cluster: false
   cors:
     allowed-origins: 'http://dev-sims.fpt.vn/, https://dev-sims.fpt.vn/'
