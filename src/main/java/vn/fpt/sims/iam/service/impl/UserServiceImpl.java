@@ -1,17 +1,14 @@
 package vn.fpt.sims.iam.service.impl;
 
-import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
-import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.fpt.sims.iam.config.ApplicationProperties;
 import vn.fpt.sims.iam.service.UserService;
 import vn.fpt.sims.iam.service.dto.UserRequest;
+import vn.fpt.sims.iam.web.util.KeycloakUtil;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -22,21 +19,19 @@ public class UserServiceImpl implements UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private final Keycloak keycloak;
+    private final KeycloakUtil keycloakUtil;
 
-    private final KeycloakSpringBootProperties keycloakProp;
-
-    public UserServiceImpl(Keycloak keycloak, KeycloakSpringBootProperties keycloakProp) {
-        this.keycloak = keycloak;
-        this.keycloakProp = keycloakProp;
+    public UserServiceImpl(KeycloakUtil keycloakUtil) {
+        this.keycloakUtil = keycloakUtil;
     }
 
     @Override
     public Response create(UserRequest newUser) {
         CredentialRepresentation credential = preparePasswordRepresentation(newUser.getPassword());
         UserRepresentation userRep = prepareUserRepresentation(newUser, credential);
-        return keycloak
-                .realm(keycloakProp.getRealm())
+        return keycloakUtil
+                .getAdminInstance()
+                .realm(keycloakUtil.realm)
                 .users()
                 .create(userRep);
     }
@@ -59,16 +54,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserRepresentation> findAll() {
-        return keycloak
-                .realm(keycloakProp.getRealm())
+        return keycloakUtil
+                .getAdminInstance()
+                .realm(keycloakUtil.realm)
                 .users()
                 .list();
     }
 
     @Override
     public UserRepresentation findById(UUID id) {
-        return keycloak
-                .realm(keycloakProp.getRealm())
+        return keycloakUtil
+                .getAdminInstance()
+                .realm(keycloakUtil.realm)
                 .users()
                 .get(id.toString())
                 .toRepresentation();
@@ -76,16 +73,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserRepresentation> findByUsername(String username) {
-        return keycloak
-                .realm(keycloakProp.getRealm())
+        return keycloakUtil
+                .getAdminInstance()
+                .realm(keycloakUtil.realm)
                 .users()
                 .search(username);
     }
 
     @Override
     public void assignToGroup(UUID id, UUID groupId) {
-        keycloak
-                .realm(keycloakProp.getRealm())
+        keycloakUtil
+                .getAdminInstance()
+                .realm(keycloakUtil.realm)
                 .users()
                 .get(id.toString())
                 .joinGroup(groupId.toString());
@@ -93,8 +92,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void assignRole(UUID id, RoleRepresentation roleRepresentation) {
-        keycloak
-                .realm(keycloakProp.getRealm())
+        keycloakUtil
+                .getAdminInstance()
+                .realm(keycloakUtil.realm)
                 .users()
                 .get(id.toString())
                 .roles()

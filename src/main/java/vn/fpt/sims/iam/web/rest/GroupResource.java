@@ -42,7 +42,7 @@ public class GroupResource {
      */
     @PostMapping
     public ResponseEntity<Void> create(@RequestParam String name) throws URISyntaxException {
-        log.debug("REST request to create Group : {}", name);
+        log.debug("REST request to create Group: {}", name);
         groupService.create(name);
         return ResponseEntity
                 .created(new URI("/" + ENTITY_NAME))

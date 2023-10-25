@@ -1,6 +1,6 @@
 logging:
   level:
-    ROOT: INFO
+    ROOT: DEBUG
     vn.fpt.sims.iam: DEBUG
 
 spring:
@@ -30,12 +30,18 @@ application:
     exposed-headers: 'Authorization,Link,X-Total-Count,X-${application.clientApp.name}-alert,X-${application.clientApp.name}-error,X-${application.clientApp.name}-params'
     allow-credentials: true
     max-age: 1800
+  http:
+    proxy:
+      host: ${PROXY_HOST}
+      port: ${PROXY_PORT}
 
 keycloak:
   realm: ${KEYCLOAK_REALM}
   auth-server-url: ${KEYCLOAK_AUTH_URL}
   ssl-required: external
-  resource: ${KEYCLOAK_CLIENT_ID}
+  resource: ${KEYCLOAK_ADMIN_CLIENT_ID}
   credentials:
-    secret: ${KEYCLOAK_CLIENT_SECRET}
+    secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET}
+    login-app-id: ${KEYCLOAK_CLIENT_ID}
+    login-app-secret: ${KEYCLOAK_CLIENT_SECRET}
   use-resource-role-mappings: true

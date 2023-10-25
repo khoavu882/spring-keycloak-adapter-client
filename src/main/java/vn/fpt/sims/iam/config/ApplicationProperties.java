@@ -104,7 +104,10 @@ public class ApplicationProperties {
     @Getter
     @Setter
     public static class Http {
+        private int readTimeOut = 3000;
+        private int connectTimeout = 3000;
         private final Cache cache = new Cache();
+        private final ProxyConfig proxy = new ProxyConfig();
 
         public Http() {
             // TODO document why this constructor is empty
@@ -116,6 +119,17 @@ public class ApplicationProperties {
             private int timeToLiveInDays = 1461;
 
             public Cache() {
+                // TODO document why this constructor is empty
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class ProxyConfig {
+            private String host;
+            private int port;
+
+            public ProxyConfig() {
                 // TODO document why this constructor is empty
             }
         }
